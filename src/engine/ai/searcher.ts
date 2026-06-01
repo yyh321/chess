@@ -1,12 +1,20 @@
 import type { BoardState, Position, Side, Piece } from '../../types';
 import { evaluateForSide } from './evaluator';
-import { getValidMoves } from '../rules';
+import { getValidMoves, isInCheck, isKingFacing } from '../rules';
 import { cloneBoard } from '../board';
 
 export interface AIMove {
   from: Position;
   to: Position;
   piece: Piece;
+}
+
+function isMoveLegal(board: BoardState, piece: Piece, to: Position): boolean {
+  const testBoard = cloneBoard(board);
+  testBoard[to[1]][to[0]] = { ...piece, position: to };
+  const [fromX, fromY] = piece.position;
+  testBoard[fromY][fromX] = null;
+  return !isInCheck(testBoard, piece.side) && !isKingFacing(testBoard);
 }
 
 export function findBestMove(board: BoardState, side: Side, depth: number): AIMove | null {
@@ -17,7 +25,7 @@ export function findBestMove(board: BoardState, side: Side, depth: number): AIMo
     for (let x = 0; x < 9; x++) {
       const piece = board[y][x];
       if (piece && piece.side === side) {
-        const moves = getValidMoves(board, piece);
+        const moves = getValidMoves(board, piece).filter(move => isMoveLegal(board, piece, move));
         for (const move of moves) {
           const newBoard = cloneBoard(board);
           newBoard[move[1]][move[0]] = { ...piece, position: move };
@@ -44,7 +52,7 @@ function negamax(board: BoardState, depth: number, alpha: number, beta: number, 
     for (let x = 0; x < 9; x++) {
       const piece = board[y][x];
       if (piece && piece.side === side) {
-        const moves = getValidMoves(board, piece);
+        const moves = getValidMoves(board, piece).filter(move => isMoveLegal(board, piece, move));
         for (const move of moves) {
           const newBoard = cloneBoard(board);
           newBoard[move[1]][move[0]] = { ...piece, position: move };
