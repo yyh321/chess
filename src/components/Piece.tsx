@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useGameStore } from '../store/gameStore';
 import type { Piece as PieceType } from '../types';
 
@@ -19,6 +20,9 @@ export function PieceComponent({ piece, isSelected }: PieceProps) {
   const text = getPieceText(piece.type, piece.side);
   const isRed = piece.side === 'red';
 
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+
   const selectedPiece = useGameStore(s => s.selectedPiece);
   const validMoves = useGameStore(s => s.validMoves);
   const selectPiece = useGameStore(s => s.selectPiece);
@@ -38,54 +42,72 @@ export function PieceComponent({ piece, isSelected }: PieceProps) {
     selectPiece(piece.position);
   };
 
+  const lift = isPressed ? -6 : isHovered ? -3 : 0;
+  const shadowOpacity = isPressed ? 0.1 : isHovered ? 0.14 : 0.18;
+  const shadowDx = isPressed ? 1 : isHovered ? 2 : 3;
+  const shadowDy = 3 - lift;
+
   return (
     <g
       onClick={handleClick}
-      style={{ cursor: 'pointer' }}
-      transform={`translate(${cx}, ${cy})`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => { setIsHovered(false); setIsPressed(false); }}
+      onMouseDown={() => setIsPressed(true)}
+      onMouseUp={() => setIsPressed(false)}
+      style={{
+        cursor: 'pointer',
+        transform: `translate(${cx}px, ${cy}px)`,
+        transition: 'transform 0.12s ease-out',
+      }}
     >
-      {/* Shadow */}
+      {/* Shadow — stays on the board surface */}
       <circle
         r={PIECE_SIZE / 2}
-        fill="rgba(0,0,0,0.18)"
-        transform="translate(3, 3)"
+        fill={`rgba(0,0,0,${shadowOpacity})`}
+        style={{
+          transform: `translate(${shadowDx}px, ${shadowDy}px)`,
+          transition: 'transform 0.12s ease-out, opacity 0.12s ease-out',
+        }}
       />
-      {/* Outer ring */}
-      <circle
-        r={PIECE_SIZE / 2}
-        fill={isRed ? '#fff5f5' : '#f8f8f8'}
-        stroke={isSelected ? '#ff9500' : isRed ? '#c41e3a' : '#1a1a1a'}
-        strokeWidth={isSelected ? 4 : 3}
-      />
-      {/* Inner ring for depth */}
-      <circle
-        r={PIECE_SIZE / 2 - 4}
-        fill="none"
-        stroke={isRed ? '#e8a0a0' : '#999999'}
-        strokeWidth={1}
-        opacity={0.6}
-      />
-      {/* Selection glow */}
-      {isSelected && (
+      {/* Piece body — lifts up */}
+      <g style={{ transform: `translateY(${lift}px)`, transition: 'transform 0.12s ease-out' }}>
+        {/* Outer ring */}
         <circle
-          r={PIECE_SIZE / 2 + 5}
-          fill="none"
-          stroke="#ff9500"
-          strokeWidth={2.5}
-          opacity={0.4}
-          strokeDasharray="5 3"
+          r={PIECE_SIZE / 2}
+          fill={isRed ? '#fff5f5' : '#f8f8f8'}
+          stroke={isSelected ? '#ff9500' : isRed ? '#c41e3a' : '#1a1a1a'}
+          strokeWidth={isSelected ? 4 : 3}
         />
-      )}
-      <text
-        textAnchor="middle"
-        dominantBaseline="central"
-        fill={isRed ? '#c41e3a' : '#1a1a1a'}
-        fontSize={36}
-        fontWeight="bold"
-        style={{ userSelect: 'none', fontFamily: '"KaiTi", "STKaiti", "楷体", serif' }}
-      >
-        {text}
-      </text>
+        {/* Inner ring for depth */}
+        <circle
+          r={PIECE_SIZE / 2 - 4}
+          fill="none"
+          stroke={isRed ? '#e8a0a0' : '#999999'}
+          strokeWidth={1}
+          opacity={0.6}
+        />
+        {/* Selection glow */}
+        {isSelected && (
+          <circle
+            r={PIECE_SIZE / 2 + 5}
+            fill="none"
+            stroke="#ff9500"
+            strokeWidth={2.5}
+            opacity={0.4}
+            strokeDasharray="5 3"
+          />
+        )}
+        <text
+          textAnchor="middle"
+          dominantBaseline="central"
+          fill={isRed ? '#c41e3a' : '#1a1a1a'}
+          fontSize={36}
+          fontWeight="bold"
+          style={{ userSelect: 'none', fontFamily: '"KaiTi", "STKaiti", "楷体", serif' }}
+        >
+          {text}
+        </text>
+      </g>
     </g>
   );
 }
