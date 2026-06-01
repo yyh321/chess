@@ -1,9 +1,9 @@
-import type { BoardState, Position, GameMode, GameStatus, AILevel, Side, MoveRecord } from '../types';
+import type { BoardState, Position, GameMode, GameStatus, AILevel, Side, MoveRecord, Piece } from '../types';
 
 export interface GameStore {
   board: BoardState;
   currentTurn: Side;
-  selectedPiece: { type: string; side: Side; position: Position } | null;
+  selectedPiece: Piece | null;
   validMoves: Position[];
   gameStatus: GameStatus;
   moveHistory: MoveRecord[];

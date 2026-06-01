@@ -30,7 +30,7 @@ const POSITION_BONUS: Record<PieceType, number[][]> = {
   ),
   cannon: Array.from({ length: 10 }, () => Array(9).fill(0)),
   pawn: Array.from({ length: 10 }, (_, y) =>
-    Array.from({ length: 9 }, (_, x) => {
+    Array.from({ length: 9 }, () => {
       const redBonus = y >= 5 ? (y - 4) * 3 : 0;
       const blackBonus = y <= 4 ? (5 - y) * 3 : 0;
       return redBonus + blackBonus;

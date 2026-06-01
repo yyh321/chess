@@ -9,7 +9,6 @@ export function Board() {
   const board = useGameStore(s => s.board);
   const selectedPiece = useGameStore(s => s.selectedPiece);
   const validMoves = useGameStore(s => s.validMoves);
-  const selectPiece = useGameStore(s => s.selectPiece);
   const movePiece = useGameStore(s => s.movePiece);
 
   const handleBoardClick = (e: React.MouseEvent<SVGSVGElement>) => {

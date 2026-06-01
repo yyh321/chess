@@ -46,7 +46,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     if (!isMoveLegal(board, selectedPiece, to)) return;
 
     const newBoard = cloneBoard(board);
-    const from: Position = [...selectedPiece.position];
+    const from = selectedPiece.position;
     const captured = newBoard[to[1]][to[0]];
 
     newBoard[to[1]][to[0]] = { ...selectedPiece, position: to };
