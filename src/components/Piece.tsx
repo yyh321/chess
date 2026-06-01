@@ -6,15 +6,18 @@ interface PieceProps {
   onClick: () => void;
 }
 
-const PIECE_SIZE = 36;
-const BOARD_OFFSET_X = 40;
-const BOARD_OFFSET_Y = 40;
-const CELL_SIZE = 50;
+const PIECE_SIZE = 46;
+const BOARD_OFFSET_X = 48;
+const BOARD_OFFSET_Y = 48;
+const CELL_SIZE = 62;
+
+export { BOARD_OFFSET_X, BOARD_OFFSET_Y, CELL_SIZE, PIECE_SIZE };
 
 export function PieceComponent({ piece, isSelected, onClick }: PieceProps) {
   const cx = BOARD_OFFSET_X + piece.position[0] * CELL_SIZE;
   const cy = BOARD_OFFSET_Y + piece.position[1] * CELL_SIZE;
   const text = getPieceText(piece.type, piece.side);
+  const isRed = piece.side === 'red';
 
   return (
     <g
@@ -22,18 +25,45 @@ export function PieceComponent({ piece, isSelected, onClick }: PieceProps) {
       style={{ cursor: 'pointer' }}
       transform={`translate(${cx}, ${cy})`}
     >
+      {/* Shadow */}
       <circle
         r={PIECE_SIZE / 2}
-        fill={piece.side === 'red' ? '#fff0f0' : '#f0f0f0'}
-        stroke={isSelected ? '#ff6600' : piece.side === 'red' ? '#cc0000' : '#000000'}
-        strokeWidth={isSelected ? 3 : 2}
+        fill="rgba(0,0,0,0.15)"
+        transform="translate(2, 2)"
       />
+      {/* Outer ring */}
+      <circle
+        r={PIECE_SIZE / 2}
+        fill={isRed ? '#fff5f5' : '#f8f8f8'}
+        stroke={isSelected ? '#ff9500' : isRed ? '#c41e3a' : '#1a1a1a'}
+        strokeWidth={isSelected ? 3.5 : 2.5}
+      />
+      {/* Inner ring for depth */}
+      <circle
+        r={PIECE_SIZE / 2 - 3}
+        fill="none"
+        stroke={isRed ? '#e8a0a0' : '#999999'}
+        strokeWidth={0.8}
+        opacity={0.6}
+      />
+      {/* Selection glow */}
+      {isSelected && (
+        <circle
+          r={PIECE_SIZE / 2 + 4}
+          fill="none"
+          stroke="#ff9500"
+          strokeWidth={2}
+          opacity={0.4}
+          strokeDasharray="4 2"
+        />
+      )}
       <text
         textAnchor="middle"
         dominantBaseline="central"
-        fill={piece.side === 'red' ? '#cc0000' : '#000000'}
-        fontSize={18}
+        fill={isRed ? '#c41e3a' : '#1a1a1a'}
+        fontSize={22}
         fontWeight="bold"
+        style={{ userSelect: 'none', fontFamily: '"KaiTi", "STKaiti", "楷体", serif' }}
       >
         {text}
       </text>
