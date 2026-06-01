@@ -24,23 +24,23 @@ const styles: Record<string, React.CSSProperties> = {
   page: {
     minHeight: '100vh',
     background: 'linear-gradient(135deg, #f5f0e6 0%, #e8dfd0 100%)',
-    padding: '24px 16px',
+    padding: '32px 20px',
   },
   layout: {
     display: 'flex',
     flexWrap: 'wrap',
-    gap: 24,
+    gap: 32,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    maxWidth: 960,
+    maxWidth: 1200,
     margin: '0 auto',
   },
   boardArea: {
     flexShrink: 0,
   },
   sidebar: {
-    minWidth: 240,
-    maxWidth: 280,
+    minWidth: 260,
+    maxWidth: 320,
     flex: 1,
   },
 };

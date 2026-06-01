@@ -6,10 +6,10 @@ interface PieceProps {
   onClick: () => void;
 }
 
-const PIECE_SIZE = 46;
-const BOARD_OFFSET_X = 48;
-const BOARD_OFFSET_Y = 48;
-const CELL_SIZE = 62;
+const PIECE_SIZE = 64;
+const BOARD_OFFSET_X = 64;
+const BOARD_OFFSET_Y = 64;
+const CELL_SIZE = 86;
 
 export { BOARD_OFFSET_X, BOARD_OFFSET_Y, CELL_SIZE, PIECE_SIZE };
 
@@ -28,40 +28,40 @@ export function PieceComponent({ piece, isSelected, onClick }: PieceProps) {
       {/* Shadow */}
       <circle
         r={PIECE_SIZE / 2}
-        fill="rgba(0,0,0,0.15)"
-        transform="translate(2, 2)"
+        fill="rgba(0,0,0,0.18)"
+        transform="translate(3, 3)"
       />
       {/* Outer ring */}
       <circle
         r={PIECE_SIZE / 2}
         fill={isRed ? '#fff5f5' : '#f8f8f8'}
         stroke={isSelected ? '#ff9500' : isRed ? '#c41e3a' : '#1a1a1a'}
-        strokeWidth={isSelected ? 3.5 : 2.5}
+        strokeWidth={isSelected ? 4 : 3}
       />
       {/* Inner ring for depth */}
       <circle
-        r={PIECE_SIZE / 2 - 3}
+        r={PIECE_SIZE / 2 - 4}
         fill="none"
         stroke={isRed ? '#e8a0a0' : '#999999'}
-        strokeWidth={0.8}
+        strokeWidth={1}
         opacity={0.6}
       />
       {/* Selection glow */}
       {isSelected && (
         <circle
-          r={PIECE_SIZE / 2 + 4}
+          r={PIECE_SIZE / 2 + 5}
           fill="none"
           stroke="#ff9500"
-          strokeWidth={2}
+          strokeWidth={2.5}
           opacity={0.4}
-          strokeDasharray="4 2"
+          strokeDasharray="5 3"
         />
       )}
       <text
         textAnchor="middle"
         dominantBaseline="central"
         fill={isRed ? '#c41e3a' : '#1a1a1a'}
-        fontSize={22}
+        fontSize={30}
         fontWeight="bold"
         style={{ userSelect: 'none', fontFamily: '"KaiTi", "STKaiti", "楷体", serif' }}
       >
