@@ -29,7 +29,7 @@ export function Board() {
   return (
     <svg
       viewBox={`0 0 ${BOARD_W + PADDING * 2} ${BOARD_H + PADDING * 2}`}
-      style={{ width: '100%', maxWidth: 900, height: 'auto', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.18))' }}
+      style={{ width: '100%', height: '100%', maxHeight: '100%', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.18))' }}
       onClick={handleBoardClick}
     >
       {/* Background */}
@@ -97,7 +97,7 @@ export function Board() {
         x2={BOARD_OFFSET_X - 2}
         y2={BOARD_OFFSET_Y + 5 * CELL_SIZE}
         stroke="#edd9a8"
-        strokeWidth={6}
+        strokeWidth={8}
       />
       <line
         x1={BOARD_OFFSET_X + BOARD_W + 2}
@@ -105,7 +105,7 @@ export function Board() {
         x2={BOARD_OFFSET_X + BOARD_W + 2}
         y2={BOARD_OFFSET_Y + 5 * CELL_SIZE}
         stroke="#edd9a8"
-        strokeWidth={6}
+        strokeWidth={8}
       />
 
       {/* River text */}
@@ -113,7 +113,7 @@ export function Board() {
         x={BOARD_OFFSET_X + BOARD_W / 2 - CELL_SIZE * 2.2}
         y={BOARD_OFFSET_Y + 4.52 * CELL_SIZE}
         fill="#5c3a1e"
-        fontSize={28}
+        fontSize={36}
         fontWeight="bold"
         opacity={0.65}
         style={{ fontFamily: '"KaiTi", "STKaiti", "楷体", serif' }}
@@ -124,7 +124,7 @@ export function Board() {
         x={BOARD_OFFSET_X + BOARD_W / 2 + CELL_SIZE * 0.4}
         y={BOARD_OFFSET_Y + 4.52 * CELL_SIZE}
         fill="#5c3a1e"
-        fontSize={28}
+        fontSize={36}
         fontWeight="bold"
         opacity={0.65}
         style={{ fontFamily: '"KaiTi", "STKaiti", "楷体", serif' }}
@@ -173,14 +173,14 @@ export function Board() {
         [0, 6], [2, 6], [4, 6], [6, 6], [8, 6],
       ].map(([x, y]) => (
         <g key={`cross-${x}-${y}`}>
-          <line x1={BOARD_OFFSET_X + x * CELL_SIZE - 7} y1={BOARD_OFFSET_Y + y * CELL_SIZE - 3} x2={BOARD_OFFSET_X + x * CELL_SIZE - 3} y2={BOARD_OFFSET_Y + y * CELL_SIZE - 3} stroke="#4a2e15" strokeWidth={1.2} />
-          <line x1={BOARD_OFFSET_X + x * CELL_SIZE - 3} y1={BOARD_OFFSET_Y + y * CELL_SIZE - 7} x2={BOARD_OFFSET_X + x * CELL_SIZE - 3} y2={BOARD_OFFSET_Y + y * CELL_SIZE - 3} stroke="#4a2e15" strokeWidth={1.2} />
-          <line x1={BOARD_OFFSET_X + x * CELL_SIZE + 7} y1={BOARD_OFFSET_Y + y * CELL_SIZE - 3} x2={BOARD_OFFSET_X + x * CELL_SIZE + 3} y2={BOARD_OFFSET_Y + y * CELL_SIZE - 3} stroke="#4a2e15" strokeWidth={1.2} />
-          <line x1={BOARD_OFFSET_X + x * CELL_SIZE + 3} y1={BOARD_OFFSET_Y + y * CELL_SIZE - 7} x2={BOARD_OFFSET_X + x * CELL_SIZE + 3} y2={BOARD_OFFSET_Y + y * CELL_SIZE - 3} stroke="#4a2e15" strokeWidth={1.2} />
-          <line x1={BOARD_OFFSET_X + x * CELL_SIZE - 7} y1={BOARD_OFFSET_Y + y * CELL_SIZE + 3} x2={BOARD_OFFSET_X + x * CELL_SIZE - 3} y2={BOARD_OFFSET_Y + y * CELL_SIZE + 3} stroke="#4a2e15" strokeWidth={1.2} />
-          <line x1={BOARD_OFFSET_X + x * CELL_SIZE - 3} y1={BOARD_OFFSET_Y + y * CELL_SIZE + 7} x2={BOARD_OFFSET_X + x * CELL_SIZE - 3} y2={BOARD_OFFSET_Y + y * CELL_SIZE + 3} stroke="#4a2e15" strokeWidth={1.2} />
-          <line x1={BOARD_OFFSET_X + x * CELL_SIZE + 7} y1={BOARD_OFFSET_Y + y * CELL_SIZE + 3} x2={BOARD_OFFSET_X + x * CELL_SIZE + 3} y2={BOARD_OFFSET_Y + y * CELL_SIZE + 3} stroke="#4a2e15" strokeWidth={1.2} />
-          <line x1={BOARD_OFFSET_X + x * CELL_SIZE + 3} y1={BOARD_OFFSET_Y + y * CELL_SIZE + 7} x2={BOARD_OFFSET_X + x * CELL_SIZE + 3} y2={BOARD_OFFSET_Y + y * CELL_SIZE + 3} stroke="#4a2e15" strokeWidth={1.2} />
+          <line x1={BOARD_OFFSET_X + x * CELL_SIZE - 9} y1={BOARD_OFFSET_Y + y * CELL_SIZE - 4} x2={BOARD_OFFSET_X + x * CELL_SIZE - 4} y2={BOARD_OFFSET_Y + y * CELL_SIZE - 4} stroke="#4a2e15" strokeWidth={1.5} />
+          <line x1={BOARD_OFFSET_X + x * CELL_SIZE - 4} y1={BOARD_OFFSET_Y + y * CELL_SIZE - 9} x2={BOARD_OFFSET_X + x * CELL_SIZE - 4} y2={BOARD_OFFSET_Y + y * CELL_SIZE - 4} stroke="#4a2e15" strokeWidth={1.5} />
+          <line x1={BOARD_OFFSET_X + x * CELL_SIZE + 9} y1={BOARD_OFFSET_Y + y * CELL_SIZE - 4} x2={BOARD_OFFSET_X + x * CELL_SIZE + 4} y2={BOARD_OFFSET_Y + y * CELL_SIZE - 4} stroke="#4a2e15" strokeWidth={1.5} />
+          <line x1={BOARD_OFFSET_X + x * CELL_SIZE + 4} y1={BOARD_OFFSET_Y + y * CELL_SIZE - 9} x2={BOARD_OFFSET_X + x * CELL_SIZE + 4} y2={BOARD_OFFSET_Y + y * CELL_SIZE - 4} stroke="#4a2e15" strokeWidth={1.5} />
+          <line x1={BOARD_OFFSET_X + x * CELL_SIZE - 9} y1={BOARD_OFFSET_Y + y * CELL_SIZE + 4} x2={BOARD_OFFSET_X + x * CELL_SIZE - 4} y2={BOARD_OFFSET_Y + y * CELL_SIZE + 4} stroke="#4a2e15" strokeWidth={1.5} />
+          <line x1={BOARD_OFFSET_X + x * CELL_SIZE - 4} y1={BOARD_OFFSET_Y + y * CELL_SIZE + 9} x2={BOARD_OFFSET_X + x * CELL_SIZE - 4} y2={BOARD_OFFSET_Y + y * CELL_SIZE + 4} stroke="#4a2e15" strokeWidth={1.5} />
+          <line x1={BOARD_OFFSET_X + x * CELL_SIZE + 9} y1={BOARD_OFFSET_Y + y * CELL_SIZE + 4} x2={BOARD_OFFSET_X + x * CELL_SIZE + 4} y2={BOARD_OFFSET_Y + y * CELL_SIZE + 4} stroke="#4a2e15" strokeWidth={1.5} />
+          <line x1={BOARD_OFFSET_X + x * CELL_SIZE + 4} y1={BOARD_OFFSET_Y + y * CELL_SIZE + 9} x2={BOARD_OFFSET_X + x * CELL_SIZE + 4} y2={BOARD_OFFSET_Y + y * CELL_SIZE + 4} stroke="#4a2e15" strokeWidth={1.5} />
         </g>
       ))}
 
@@ -194,10 +194,10 @@ export function Board() {
             key={`m${x}-${y}`}
             cx={cx}
             cy={cy}
-            r={28}
+            r={36}
             fill="none"
             stroke="rgba(255, 149, 0, 0.75)"
-            strokeWidth={3.5}
+            strokeWidth={4.5}
             pointerEvents="none"
           />
         ) : (
@@ -205,7 +205,7 @@ export function Board() {
             key={`m${x}-${y}`}
             cx={cx}
             cy={cy}
-            r={9}
+            r={12}
             fill="rgba(76, 175, 80, 0.75)"
             pointerEvents="none"
           />

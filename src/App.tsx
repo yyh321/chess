@@ -22,26 +22,34 @@ function App() {
 
 const styles: Record<string, React.CSSProperties> = {
   page: {
-    minHeight: '100vh',
+    height: '100vh',
+    width: '100vw',
     background: 'linear-gradient(135deg, #f5f0e6 0%, #e8dfd0 100%)',
-    padding: '32px 20px',
+    overflow: 'hidden',
   },
   layout: {
     display: 'flex',
-    flexWrap: 'wrap',
-    gap: 32,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    maxWidth: 1200,
-    margin: '0 auto',
+    height: '100%',
+    width: '100%',
   },
   boardArea: {
-    flexShrink: 0,
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+    minWidth: 0,
   },
   sidebar: {
-    minWidth: 260,
-    maxWidth: 320,
-    flex: 1,
+    width: 200,
+    flexShrink: 0,
+    padding: '16px 12px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 12,
+    background: 'rgba(255,255,255,0.35)',
+    borderLeft: '1px solid rgba(0,0,0,0.06)',
+    overflowY: 'auto',
   },
 };
 

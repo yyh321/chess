@@ -42,8 +42,8 @@ function statusText(status: string): string {
 
 const styles: Record<string, React.CSSProperties> = {
   container: {
-    padding: 20,
-    minWidth: 220,
+    padding: 14,
+    minWidth: 0,
     background: '#fff',
     borderRadius: 12,
     boxShadow: '0 4px 16px rgba(0,0,0,0.08)',

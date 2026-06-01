@@ -6,10 +6,10 @@ interface PieceProps {
   isSelected: boolean;
 }
 
-const PIECE_SIZE = 64;
-const BOARD_OFFSET_X = 64;
-const BOARD_OFFSET_Y = 64;
-const CELL_SIZE = 86;
+const PIECE_SIZE = 80;
+const BOARD_OFFSET_X = 80;
+const BOARD_OFFSET_Y = 80;
+const CELL_SIZE = 110;
 
 export { BOARD_OFFSET_X, BOARD_OFFSET_Y, CELL_SIZE, PIECE_SIZE };
 
@@ -80,7 +80,7 @@ export function PieceComponent({ piece, isSelected }: PieceProps) {
         textAnchor="middle"
         dominantBaseline="central"
         fill={isRed ? '#c41e3a' : '#1a1a1a'}
-        fontSize={30}
+        fontSize={36}
         fontWeight="bold"
         style={{ userSelect: 'none', fontFamily: '"KaiTi", "STKaiti", "楷体", serif' }}
       >
