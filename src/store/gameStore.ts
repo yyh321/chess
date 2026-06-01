@@ -90,20 +90,28 @@ export const useGameStore = create<GameStore>((set, get) => ({
   },
 
   undoMove: () => {
-    const { moveHistory } = get();
+    const { moveHistory, mode } = get();
     if (moveHistory.length === 0) return;
-    const last = moveHistory[moveHistory.length - 1];
+
+    // PVE 模式下悔棋一次性回退两步（用户步 + AI 步）
+    const steps = mode === 'pve' && moveHistory.length >= 2 ? 2 : 1;
     const newBoard = cloneBoard(get().board);
-    newBoard[last.from[1]][last.from[0]] = last.piece;
-    newBoard[last.to[1]][last.to[0]] = last.captured;
+
+    for (let i = 0; i < steps; i++) {
+      const record = moveHistory[moveHistory.length - 1 - i];
+      newBoard[record.from[1]][record.from[0]] = record.piece;
+      newBoard[record.to[1]][record.to[0]] = record.captured;
+    }
+
+    const lastUndone = moveHistory[moveHistory.length - steps];
 
     set({
       board: newBoard,
-      currentTurn: last.piece.side,
+      currentTurn: lastUndone.piece.side,
       selectedPiece: null,
       validMoves: [],
-      gameStatus: last.prevStatus,
-      moveHistory: moveHistory.slice(0, -1),
+      gameStatus: lastUndone.prevStatus,
+      moveHistory: moveHistory.slice(0, -steps),
     });
   },
 
