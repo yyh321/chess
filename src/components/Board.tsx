@@ -29,7 +29,7 @@ export function Board() {
   };
 
   return (
-    <svg width={BOARD_W + 80} height={BOARD_H + 80} onClick={handleBoardClick}>
+    <svg viewBox={`0 0 ${BOARD_W + 80} ${BOARD_H + 80}`} style={{ width: '100%', maxWidth: 520, height: 'auto' }} onClick={handleBoardClick}>
       <rect x={10} y={10} width={BOARD_W + 60} height={BOARD_H + 60} fill="#f5deb3" rx={4} />
 
       {Array.from({ length: 10 }, (_, i) => (

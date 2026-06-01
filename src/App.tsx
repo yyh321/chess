@@ -6,11 +6,11 @@ import { useAI } from './hooks/useAI';
 function App() {
   useAI();
   return (
-    <div style={{ display: 'flex', gap: 16 }}>
-      <div>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center', padding: 16 }}>
+      <div style={{ flexShrink: 0 }}>
         <Board />
       </div>
-      <div>
+      <div style={{ minWidth: 200 }}>
         <GameInfo />
         <Controls />
       </div>
