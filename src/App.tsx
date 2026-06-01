@@ -1,10 +1,15 @@
+import { useEffect } from 'react';
 import { Board } from './components/Board';
 import { GameInfo } from './components/GameInfo';
 import { Controls } from './components/Controls';
 import { useAI } from './hooks/useAI';
+import { initSoundSetting } from './utils/sound';
 
 function App() {
   useAI();
+  useEffect(() => {
+    initSoundSetting();
+  }, []);
   return (
     <div style={styles.page}>
       <div style={styles.layout}>

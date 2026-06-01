@@ -3,6 +3,7 @@ import type { GameStore } from './types';
 import { createInitialBoard, cloneBoard } from '../engine/board';
 import { getValidMoves, isInCheck, isCheckmate, isKingFacing } from '../engine/rules';
 import type { Position, MoveRecord, Piece } from '../types';
+import { playSelect, playMove, playCapture, playCheck, playCheckmate } from '../utils/sound';
 
 function isMoveLegal(board: ReturnType<typeof cloneBoard>, piece: Piece, to: Position): boolean {
   const testBoard = cloneBoard(board);
@@ -34,6 +35,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       isMoveLegal(board, piece, move)
     );
     set({ selectedPiece: piece, validMoves: moves });
+    playSelect();
   },
 
   movePiece: (to: Position) => {
@@ -64,6 +66,17 @@ export const useGameStore = create<GameStore>((set, get) => ({
     let newStatus: typeof gameStatus = 'playing';
     if (isInCheck(newBoard, nextTurn)) {
       newStatus = isCheckmate(newBoard, nextTurn) ? 'checkmate' : 'check';
+    }
+
+    if (captured) {
+      playCapture();
+    } else {
+      playMove();
+    }
+    if (newStatus === 'check') {
+      playCheck();
+    } else if (newStatus === 'checkmate') {
+      playCheckmate();
     }
 
     set({
