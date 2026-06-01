@@ -219,7 +219,6 @@ export function Board() {
             key={piece.id}
             piece={piece}
             isSelected={selectedPiece?.id === piece.id}
-            onClick={() => selectPiece(piece.position)}
           />
         ) : null
       )}

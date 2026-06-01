@@ -1,9 +1,9 @@
+import { useGameStore } from '../store/gameStore';
 import type { Piece as PieceType } from '../types';
 
 interface PieceProps {
   piece: PieceType;
   isSelected: boolean;
-  onClick: () => void;
 }
 
 const PIECE_SIZE = 64;
@@ -13,15 +13,34 @@ const CELL_SIZE = 86;
 
 export { BOARD_OFFSET_X, BOARD_OFFSET_Y, CELL_SIZE, PIECE_SIZE };
 
-export function PieceComponent({ piece, isSelected, onClick }: PieceProps) {
+export function PieceComponent({ piece, isSelected }: PieceProps) {
   const cx = BOARD_OFFSET_X + piece.position[0] * CELL_SIZE;
   const cy = BOARD_OFFSET_Y + piece.position[1] * CELL_SIZE;
   const text = getPieceText(piece.type, piece.side);
   const isRed = piece.side === 'red';
 
+  const selectedPiece = useGameStore(s => s.selectedPiece);
+  const validMoves = useGameStore(s => s.validMoves);
+  const selectPiece = useGameStore(s => s.selectPiece);
+  const movePiece = useGameStore(s => s.movePiece);
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (selectedPiece && selectedPiece.side !== piece.side) {
+      const isValid = validMoves.some(
+        m => m[0] === piece.position[0] && m[1] === piece.position[1]
+      );
+      if (isValid) {
+        movePiece(piece.position);
+        return;
+      }
+    }
+    selectPiece(piece.position);
+  };
+
   return (
     <g
-      onClick={onClick}
+      onClick={handleClick}
       style={{ cursor: 'pointer' }}
       transform={`translate(${cx}, ${cy})`}
     >
