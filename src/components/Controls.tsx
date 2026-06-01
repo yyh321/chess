@@ -1,15 +1,27 @@
 import { useState } from 'react';
 import { useGameStore } from '../store/gameStore';
 import { isSoundEnabled, setSoundEnabled } from '../utils/sound';
+import { startMusic, stopMusic, isMusicPlaying } from '../utils/music';
 
 export function Controls() {
   const { undoMove, resetGame, mode, setMode, aiLevel, setAILevel } = useGameStore();
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
+  const [musicOn, setMusicOn] = useState(isMusicPlaying());
 
   const toggleSound = () => {
     const next = !soundOn;
     setSoundOn(next);
     setSoundEnabled(next);
+  };
+
+  const toggleMusic = () => {
+    const next = !musicOn;
+    setMusicOn(next);
+    if (next) {
+      startMusic();
+    } else {
+      stopMusic();
+    }
   };
 
   return (
@@ -42,6 +54,15 @@ export function Controls() {
           onClick={toggleSound}
         >
           {soundOn ? '开启' : '静音'}
+        </button>
+      </div>
+      <div style={styles.field}>
+        <label style={styles.label}>音乐</label>
+        <button
+          style={musicOn ? styles.soundOn : styles.soundOff}
+          onClick={toggleMusic}
+        >
+          {musicOn ? '播放中' : '已暂停'}
         </button>
       </div>
     </div>
