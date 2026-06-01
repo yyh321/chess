@@ -2,7 +2,15 @@ import { create } from 'zustand';
 import type { GameStore } from './types';
 import { createInitialBoard, cloneBoard } from '../engine/board';
 import { getValidMoves, isInCheck, isCheckmate, isKingFacing } from '../engine/rules';
-import type { Position, MoveRecord } from '../types';
+import type { Position, MoveRecord, Piece } from '../types';
+
+function isMoveLegal(board: ReturnType<typeof cloneBoard>, piece: Piece, to: Position): boolean {
+  const testBoard = cloneBoard(board);
+  testBoard[to[1]][to[0]] = { ...piece, position: to };
+  const [fromX, fromY] = piece.position;
+  testBoard[fromY][fromX] = null;
+  return !isInCheck(testBoard, piece.side) && !isKingFacing(testBoard);
+}
 
 export const useGameStore = create<GameStore>((set, get) => ({
   board: createInitialBoard(),
@@ -22,7 +30,9 @@ export const useGameStore = create<GameStore>((set, get) => ({
       set({ selectedPiece: null, validMoves: [] });
       return;
     }
-    const moves = getValidMoves(board, piece);
+    const moves = getValidMoves(board, piece).filter(move =>
+      isMoveLegal(board, piece, move)
+    );
     set({ selectedPiece: piece, validMoves: moves });
   },
 
@@ -33,16 +43,14 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const isValid = get().validMoves.some(m => m[0] === to[0] && m[1] === to[1]);
     if (!isValid) return;
 
+    if (!isMoveLegal(board, selectedPiece, to)) return;
+
     const newBoard = cloneBoard(board);
     const from: Position = [...selectedPiece.position];
     const captured = newBoard[to[1]][to[0]];
 
     newBoard[to[1]][to[0]] = { ...selectedPiece, position: to };
     newBoard[from[1]][from[0]] = null;
-
-    if (isKingFacing(newBoard)) {
-      return;
-    }
 
     const nextTurn = currentTurn === 'red' ? 'black' : 'red';
     const record: MoveRecord = {
